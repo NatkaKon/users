@@ -15,11 +15,7 @@ const data = [
         },
         "phone": "1-770-736-8031 x56442",
         "website": "hildegard.org",
-        "company": {
-            "name": "Romaguera-Crona",
-            "catchPhrase": "Multi-layered client-server neural-net",
-            "bs": "harness real-time e-markets"
-        }
+        "married": true
     },
     {
         "id": 2,
@@ -34,11 +30,7 @@ const data = [
         },
         "phone": "010-692-6593 x09125",
         "website": "anastasia.net",
-        "company": {
-            "name": "Deckow-Crist",
-            "catchPhrase": "Proactive didactic contingency",
-            "bs": "synergize scalable supply-chains"
-        }
+        "married": true
     },
     {
         "id": 3,
@@ -53,11 +45,7 @@ const data = [
         },
         "phone": "1-463-123-4447",
         "website": "ramiro.info",
-        "company": {
-            "name": "Romaguera-Jacobson",
-            "catchPhrase": "Face to face bifurcated interface",
-            "bs": "e-enable strategic applications"
-        }
+        "married": true,
     },
     {
         "id": 4,
@@ -72,11 +60,7 @@ const data = [
         },
         "phone": "493-170-9623 x156",
         "website": "kale.biz",
-        "company": {
-            "name": "Robel-Corkery",
-            "catchPhrase": "Multi-tiered zero tolerance productivity",
-            "bs": "transition cutting-edge web services"
-        }
+        "married": true
     },
     {
         "id": 5,
@@ -91,11 +75,7 @@ const data = [
         },
         "phone": "(254)954-1289",
         "website": "demarco.info",
-        "company": {
-            "name": "Keebler LLC",
-            "catchPhrase": "User-centric fault-tolerant solution",
-            "bs": "revolutionize end-to-end systems"
-        }
+        "married": false
     },
     {
         "id": 6,
@@ -110,11 +90,7 @@ const data = [
         },
         "phone": "1-477-935-8478 x6430",
         "website": "ola.org",
-        "company": {
-            "name": "Considine-Lockman",
-            "catchPhrase": "Synchronised bottom-line interface",
-            "bs": "e-enable innovative applications"
-        }
+        "married": false
     },
     {
         "id": 7,
@@ -129,11 +105,7 @@ const data = [
         },
         "phone": "210.067.6132",
         "website": "elvis.io",
-        "company": {
-            "name": "Johns Group",
-            "catchPhrase": "Configurable multimedia task-force",
-            "bs": "generate enterprise e-tailers"
-        }
+        "married": true
     },
     {
         "id": 8,
@@ -148,11 +120,7 @@ const data = [
         },
         "phone": "586.493.6943 x140",
         "website": "jacynthe.com",
-        "company": {
-            "name": "Abernathy Group",
-            "catchPhrase": "Implemented secondary concept",
-            "bs": "e-enable extensible e-tailers"
-        }
+        "married": false
     },
     {
         "id": 9,
@@ -167,11 +135,7 @@ const data = [
         },
         "phone": "(775)976-6794 x41206",
         "website": "conrad.com",
-        "company": {
-            "name": "Yost and Sons",
-            "catchPhrase": "Switchable contextually-based project",
-            "bs": "aggregate real-time technologies"
-        }
+        "married": true
     },
     {
         "id": 10,
@@ -186,41 +150,63 @@ const data = [
         },
         "phone": "024-648-3804",
         "website": "ambrose.net",
-        "company": {
-            "name": "Hoeger LLC",
-            "catchPhrase": "Centralized empowering task-force",
-            "bs": "target end-to-end models"
-        }
+        "married": false
     }
 ]
 
-function ListUserItem(props: UserPropsType) {
-    const {name, username, email, address} = props
+function ListUserHeader() {
     return (
-        <li>
-            <p> {name}</p>
-            <p> {username}</p>
-            <p> {email}</p>
-            <p> {address.city} / {address.street} / {address.zipcode}          </p>
+        <div className={'list-user_header'}>
+            <div>ID</div>
+            <div>Name</div>
+            <div>User_name</div>
+            <div>Email</div>
+            <div>Website</div>
+            <div>Address</div>
+            <div>Married</div>
+            <div>Phone</div>
+        </div>
+    )
+}
+
+function ListUserItem(props: UserPropsType) {
+    const {id, name, username, married, email,website, address, phone} = props
+    return (
+        <li className={'list-user_item'}>
+            <strong> {id}</strong>
+            <p className={'list-user_paragraph'}> {name}</p>
+            <p className={'list-user_paragraph'}> {username}</p>
+            <p className={'list-user_paragraph'}> {email}</p>
+            <p className={'list-user_paragraph'}> {website}</p>
+            <p className={'list-user_paragraph'}> {address.city}/{address.street}  </p>
+            <p className={'list-user_paragraph'}> {married ?'Yes':'No'}  </p>
+            <p className={'list-user_paragraph'}> {phone}  </p>
         </li>
     )
 }
 
-function ListUsers(props: any) {
+function ListUsers(props: ListUsersPropsType) {
     const {users} = props
 
     return (
-        <ul>
-            {users.map((user: any) => {
-                return <ListUserItem
-                    id={user.id}
-                    name={user.name}
-                    username={user.username}
-                    email={user.email}
-                    address={user.address}
-                />
-            })}
-        </ul>
+        <>
+            <ListUserHeader/>
+            <ul className={'list-user'}>
+                {users.map((user: any) => {
+                    return <ListUserItem
+                        key={user.id}
+                        id={user.id}
+                        name={user.name}
+                        username={user.username}
+                        email={user.email}
+                        address={user.address}
+                        married={user.married}
+                        phone={user.phone}
+                        website={user.website}
+                    />
+                })}
+            </ul>
+        </>
     )
 }
 
@@ -241,16 +227,12 @@ type UserPropsType = {
     name: string,
     username: string,
     email: string,
-    address: AdressPropsType,
-    phone?: string,
-    website?: string,
-    company?: {
-        name: string,
-        catchPhrase: string,
-        bs: string
-    }
+    address: AddressPropsType,
+    phone: string,
+    website: string,
+    married: boolean
 }
-type AdressPropsType = {
+type AddressPropsType = {
     street: string,
     suite: string,
     city: string,
